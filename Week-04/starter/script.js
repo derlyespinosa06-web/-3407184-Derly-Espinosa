@@ -21,26 +21,26 @@
 // ============================================
 
 // TODO: Define el nombre de tu dominio
-const DOMAIN_NAME = "Mi Dominio";
+const DOMAIN_NAME = "Marketplace de Artesanías Colombianas";
 
 // TODO: Define el nombre de la entidad principal
 // Inclúyelo con espacios y mayúsculas/minúsculas
 // para poder aplicar transformaciones después
-const rawEntityName = "  nombre de la entidad  ";
+const rawEntityName = "  Mochila Wayuu tradicional  ";
 
 // TODO: Define una categoría o tipo (string)
-const entityCategory = "Categoría del elemento";
+const entityCategory = "Bolso artesanal";
 
 // TODO: Define un código identificador (string)
 // Elige un prefijo coherente con tu dominio
-const entityCode = "COD-001";
+const entityCode = "ART-002";
 
 // TODO: Define una descripción corta (string)
 // Debe contener varias palabras para usar includes/slice
-const entityDescription = "Descripción interesante de la entidad del dominio asignado.";
+const entityDescription = "Hermosa mochila tejida a mano por artesanas Wayuu de La Guajira";
 
 // TODO: Define un dato numérico relevante (number)
-const mainValue = 0;
+const mainValue = 150000; // Precio en pesos colombianos
 
 // TODO: Define un estado booleano
 const isActive = true;
@@ -74,11 +74,11 @@ const hasValidPrefix = entityCode.startsWith(codePrefix);
 
 // TODO: Verifica si la descripción contiene una palabra clave
 // Usa includes() con una palabra importante de tu dominio
-const descriptionIsRelevant = entityDescription.includes("dominio");
+const descriptionIsRelevant = entityDescription.includes("wayuu");
 
 // TODO: Verifica si el código termina con los dígitos
 // Usa endsWith() con algo coherente de tu dominio
-const hasValidSuffix = entityCode.endsWith("001");
+const hasValidSuffix = entityCode.endsWith("002");
 
 
 // ============================================
@@ -98,7 +98,7 @@ Nombre:      ${entityNameUpper}
 Categoría:   ${entityCategory}
 Código:      ${entityCode}
 Prefijo:     ${codePrefix}
-Valor:       ${mainValue}
+Valor:       ${mainValue.toLocaleString("es-CO", { style: "currency", currency: "COP" })}
 Estado:      ${isActive ? "Activo" : "Inactivo"}
 
 ${subSeparator}
@@ -118,7 +118,7 @@ console.log("--- Validaciones ---");
 // TODO: Muestra los resultados de las validaciones con template literals
 console.log(`¿Código empieza con '${codePrefix}'?: ${hasValidPrefix}`);
 console.log(`¿Descripción contiene 'dominio'?: ${descriptionIsRelevant}`);
-console.log(`¿Código termina con '001'?: ${hasValidSuffix}`);
+console.log(`¿Código termina con '002'?: ${hasValidSuffix}`);
 console.log("");
 
 
@@ -130,6 +130,6 @@ console.log("--- Notificación ---");
 
 // TODO: Construye un mensaje corto de una línea
 // Usa template literal con el nombre limpio y el código
-const notification = `📢 Nuevo elemento disponible: ${entityName} (${entityCode})`;
+const notification = `📢 Nueva artesania disponible: ${entityName} (${entityCode}) por ${mainValue.toLocaleString("es-CO", { style: "currency", currency: "COP" })}`;
 console.log(notification);
 console.log("");
