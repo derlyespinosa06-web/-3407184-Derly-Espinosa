@@ -97,23 +97,26 @@ console.log("");
 console.log("=== Condiciones lógicas ===");
 
 const esClientePremium = true;
+
 const aplicaDescuento = esClientePremium && totalCompra >= 50000;
 console.log("¿Aplica descuento premium?", aplicaDescuento);
 
 const envioGratis = totalCompra >= 120000 || esClientePremium;
 console.log("¿Tiene envío gratis?", envioGratis);
 
-const stockDisponible = !(stockRestante === 0);
-console.log("¿Hay productos disponibles?", stockDisponible);
+const hayStock = stockSombrerosRestante > 0 || stockMochilasRestante > 0 || stockPulserasRestante > 0;
+console.log("¿Hay productos disponibles?", hayStock);
 
 console.log("");
 
 // ============================================
 // SECCIÓN 6: Resumen final
 // ============================================
-onsole.log("=== Resumen ===");
+console.log("=== Resumen ===");
 
 console.log("Total compra:", totalCompra);
 console.log("Total con descuento:", carrito);
-console.log("Stock restante:", stockRestante);
 console.log("¿Envío gratis?", envioGratis);
+console.log("¿Cliente premium?", esClientePremium);
+
+console.log("");
