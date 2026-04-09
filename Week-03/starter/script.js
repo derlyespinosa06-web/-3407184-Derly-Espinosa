@@ -44,13 +44,6 @@ const totalCompra = totalSombreros + totalMochilas + totalPulseras;
 console.log("Total de la compra:", totalCompra);
 
 // aqui se vera lo actualizado de los stocks despues de la compra restando la cantidad inicial 
-const stockSombrerosRestante = STOCK_SOMBREROS - sombrerosComprados;
-console.log("Stock sombreros restante:", stockSombrerosRestante);
-const stockMochilasRestante = STOCK_MOCHILAS - mochilasCompradas;
-console.log("Stock mochilas restante:", stockMochilasRestante);
-const stockPulserasRestante = STOCK_PULSERAS - pulserasCompradas;
-console.log("Stock pulseras restante:", stockPulserasRestante);
-
 
 console.log("");
 
