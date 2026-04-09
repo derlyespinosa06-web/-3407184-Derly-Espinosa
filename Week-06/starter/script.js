@@ -28,6 +28,12 @@
 // (ej: books, medicines, machines, dishes, patients...)
 const items = [
   // TODO: Agrega tus elementos aquí
+  { name: "Sombrero Vueltiao", category: "accesorios", value: 45000 },
+  { name: "Mochila Wayuu", category: "accesorios", value: 80000 },
+  { name: "Pulsera Artesanal", category: "joyeria", value: 15000 },
+  { name: "Collar de Chaquiras", category: "joyeria", value: 35000 },
+  { name: "Hamaca Guajira", category: "hogar", value: 120000 },
+  { name: "Canasto de Palma", category: "hogar", value: 60000 }
   // { name: "nombre del elemento", category: "categoría", value: 0 }
 ];
 
@@ -35,11 +41,14 @@ const items = [
 // (ej: para Biblioteca sería ["ficción", "no-ficción", "ciencia"])
 const categories = [
   // TODO: lista tus categorías
+  "accesorios",
+  "joyeria",
+  "hogar"
 ];
 
 // TODO: Define un nombre descriptivo para el valor numérico
 // (ej: "páginas", "stock", "horas de uso", "precio", "duración")
-const valueLabel = "valor"; // ← cambiar
+const valueLabel = "precio"; // ← cambiar
 
 // ============================================
 // SECCIÓN 2: Listado completo con for...of
@@ -54,10 +63,14 @@ let lineNumber = 0;
 for (const item of items) {
   lineNumber++;
   // TODO: Reemplaza este console.log con la información de tu dominio
-  console.log(`${lineNumber}. ${item.name}`);
-}
 
-console.log("");
+  const formattedValue = item.value.toLocaleString("es-CO", {
+    style: "currency",
+    currency: "COP"
+  });
+  
+  console.log(`${lineNumber}. ${item.name} — ${item.category} — ${valueLabel}: ${formattedValue}`);
+}
 
 // ============================================
 // SECCIÓN 3: Contadores por categoría
@@ -70,6 +83,12 @@ console.log("=== CONTEO POR CATEGORÍA ===");
 
 for (const category of categories) {
   let count = 0;
+
+  for (const item of items) {
+    if (item.category === category) {
+      count++;
+    }
+  }
 
   // TODO: Completa el bucle para contar items de esta categoría
   // for (const item of items) {
@@ -91,14 +110,24 @@ let totalValue = 0;
 
 for (const item of items) {
   // TODO: Acumula el valor de cada elemento
-  // totalValue += item.value;
+  totalValue += item.value;
 }
 
 // TODO: Calcula el promedio
 const averageValue = items.length > 0 ? totalValue / items.length : 0;
 
-console.log(`Total ${valueLabel}: ${totalValue}`);
-console.log(`Promedio ${valueLabel}: ${averageValue.toFixed(1)}`);
+const formattedTotal = totalValue.toLocaleString("es-CO", {
+  style: "currency",
+  currency: "COP"
+});
+
+const formattedAverage = averageValue.toLocaleString("es-CO", {
+  style: "currency",
+  currency: "COP"
+});
+
+console.log(`Total ${valueLabel}: ${formattedTotal}`);
+console.log(`Promedio ${valueLabel}: ${formattedAverage}`);
 
 console.log("");
 
@@ -117,13 +146,29 @@ if (items.length > 0) {
   for (const item of items) {
     // TODO: Comparar y actualizar maxItem y minItem
   }
+  if (item.value > maxItem.value) {
+      maxItem = item;
+    }
+    if (item.value < minItem.value) {
+      minItem = item;
+    }
+  }
 
+  const maxValue = maxItem.value.toLocaleString("es-CO", {
+    style: "currency",
+    currency: "COP"
+  });
+
+  const minValue = minItem.value.toLocaleString("es-CO", {
+    style: "currency",
+    currency: "COP"
+  });
   // TODO: Imprime los resultados
-  console.log(`Mayor ${valueLabel}: ${maxItem?.name} (${maxItem?.value})`);
-  console.log(`Menor ${valueLabel}: ${minItem?.name} (${minItem?.value})`);
-}
+  console.log(`Mayor ${valueLabel}: ${maxItem.name} (${maxValue})`);
+  console.log(`Menor ${valueLabel}: ${minItem.name} (${minValue})`);
 
-console.log("");
+  console.log("");
+
 
 // ============================================
 // SECCIÓN 6: Reporte numerado con for clásico
@@ -137,11 +182,19 @@ for (let i = 0; i < items.length; i++) {
 
   // TODO: Determina si el item está sobre o bajo el promedio
   // Pista: usa el operador ternario o if/else
-  const comparison = ""; // TODO: "sobre el promedio" o "bajo el promedio"
+  const comparison = item.value >= averageValue // TODO: "sobre el promedio" o "bajo el promedio"
+    ? "sobre el promedio"
+    : "bajo el promedio";
+
+    const formattedValue = item.value.toLocaleString("es-CO", {
+    style: "currency",
+    currency: "COP"
+  });
 
   // TODO: Imprime la línea del reporte
-  console.log(`${i + 1}. ${item.name} — ${comparison}`);
+  console.log(`${i + 1}. ${item.name} — ${formattedValue} — ${comparison}`);
 }
 
 console.log("");
 console.log("=== FIN DEL REPORTE ===");
+
