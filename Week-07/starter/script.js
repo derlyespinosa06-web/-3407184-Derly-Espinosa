@@ -26,19 +26,19 @@
 // Ejemplo: const TAX_RATE = 0.19;
 //          const CURRENCY = "USD";
 //          const DOMAIN_NAME = "Mi Dominio";
-const DOMAIN_NAME = "Mi Dominio";
-const VALUE_LABEL = "valor"; // Ej: "precio", "cantidad", "duración"
+const DOMAIN_NAME = "Marketplace de Artesanías Colombianas";
+const VALUE_LABEL = "precio";
+const CURRENCY = "COP";
 
 // TODO: Define un array con al menos 5 elementos de tu dominio.
 // Cada elemento debe ser un objeto con propiedades relevantes.
 // Ejemplo (Biblioteca):
-// const items = [
-//   { id: 1, name: "El Quijote",  category: "clásico",    value: 15,  active: true },
-//   { id: 2, name: "1984",        category: "distopía",   value: 12,  active: true },
-//   ...
-// ];
 const items = [
-  // TODO: Agrega tus elementos aquí
+   { id: 1, name: "Sombrero Vueltiao", category: "accesorios", value: 45000, active: true },
+   { id: 2, name: "Mochila Wayuu", category: "accesorios", value: 80000, active: true },
+   { id: 3, name: "Pulsera Artesanal", category: "joyeria", value: 15000, active: true },
+   { id: 4, name: "Hamaca Guajira", category: "hogar", value: 120000, active: false },
+   { id: 5, name: "Canasto de Palma", category: "hogar", value: 60000, active: true }
 ];
 
 // ============================================
@@ -57,13 +57,19 @@ const items = [
 // const formatItem = (medicine) =>
 //   `💊 ${medicine.name} — Stock: ${medicine.stock} — $${medicine.price}`;
 
-const formatItem = (item) => {
+  const formatItem = (item) => {
+  const precio = item.value.toLocaleString("es-CO", {
+    style: "currency",
+    currency: "COP"
+  });
+
+  return `🧺 ${item.name} [${item.category}] — ${precio}`;
+};
   // TODO: Implementar usando template literals
   // 1. Incluir el nombre del elemento
   // 2. Incluir la categoría o tipo
   // 3. Incluir el valor numérico relevante
-  return `${item.name}`; // TODO: Expandir este template
-};
+  //return `${item.name}`; // TODO: Expandir este template
 
 // ============================================
 // SECCIÓN 3: Función de cálculo (pura)
@@ -84,6 +90,8 @@ const calculateValue = (baseValue, factor = 1) => {
   // TODO: Implementar el cálculo relevante para tu dominio
   return baseValue * factor;
 };
+
+
 
 // ============================================
 // SECCIÓN 4: Función de validación
@@ -121,11 +129,14 @@ const isValid = (item) => {
 // const formatPrice = (price, currency = "USD", showTax = false) =>
 //   showTax ? `${currency} ${(price * 1.19).toFixed(2)}` : `${currency} ${price.toFixed(2)}`;
 
-const formatWithDefault = (value, label = VALUE_LABEL, currency = "") => {
-  // TODO: Implementar con parámetros por defecto relevantes al dominio
-  return currency
-    ? `${label}: ${currency} ${value}`
-    : `${label}: ${value}`;
+const formatWithDefault = (value, label = VALUE_LABEL, currency = CURRENCY) => {
+
+  const formattedValue = value.toLocaleString("es-CO", {
+    style: "currency",
+    currency: currency
+  });
+
+  return `${label}: ${formattedValue}`;
 };
 
 // ============================================
@@ -141,16 +152,17 @@ const formatWithDefault = (value, label = VALUE_LABEL, currency = "") => {
 // 5. Mostrar el resumen final con formatWithDefault()
 
 console.log(`\n${"═".repeat(45)}`);
-console.log(`   REPORTE — ${DOMAIN_NAME}`);
+console.log(`   REPORTE — ${MARKETPLACE_DE_ARTESANÍAS_COLOMBIANAS}`);
 console.log(`${"═".repeat(45)}`);
 
 // TODO: Reemplaza este código de ejemplo con la implementación real
 
 if (items.length === 0) {
-  console.log("\n⚠️  No hay elementos. Agrega datos en la Sección 1.");
+  console.log("\n⚠️  No hay productos registrados.");
 } else {
+
   // --- Listado ---
-  console.log("\n📋 Listado:");
+ console.log("\n🧺 Productos disponibles:");
   let lineNumber = 1;
   for (const item of items) {
     // TODO: Usa formatItem(item) para mostrar cada elemento
@@ -166,7 +178,7 @@ if (items.length === 0) {
       validCount++;
     }
   }
-  console.log(`\n✅ Elementos válidos: ${validCount} / ${items.length}`);
+ console.log(`\n✅ Productos disponibles: ${validCount} de ${items.length}`);
 
   // --- Cálculo ---
   let totalValue = 0;
@@ -174,7 +186,16 @@ if (items.length === 0) {
     // TODO: Usa calculateValue() con las propiedades de tu item
     totalValue += calculateValue(item.value ?? 0);
   }
-  console.log(formatWithDefault(totalValue, `Total ${VALUE_LABEL}`));
+  const averageValue = totalValue / items.length;
+   console.log(
+    formatWithDefault(totalValue, "Total precios", "COP")
+  );
+
+  console.log(
+    formatWithDefault(averageValue, "Promedio precios", "COP")
+  );
 }
 
 console.log(`\n${"═".repeat(45)}\n`);
+
+
