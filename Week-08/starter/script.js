@@ -10,8 +10,8 @@
 // ============================================
 
 // ---- CONFIGURA TU DOMINIO ----
-const DOMAIN_NAME = "Mi Inventario"; // TODO: Cambiar por tu dominio
-const VALUE_LABEL = "elementos";     // TODO: Cambiar por unidad de tu dominio
+const DOMAIN_NAME = "Marketplace de Artesanías Colombianas"; // TODO: Cambiar por tu dominio
+const VALUE_LABEL = "productos";     // TODO: Cambiar por unidad de tu dominio
 
 // ============================================
 // 1. ARRAY INICIAL — Define tu inventario
@@ -33,6 +33,11 @@ const VALUE_LABEL = "elementos";     // TODO: Cambiar por unidad de tu dominio
 
 const items = [
   // TODO: Agrega al menos 5 objetos de tu dominio
+  { id: 1, name: "Sombrero Vueltiao", price: 45000, category: "accesorios", stock: 20, active: true },
+  { id: 2, name: "Mochila Wayuu", price: 80000, category: "accesorios", stock: 15, active: true },
+  { id: 3, name: "Pulsera Artesanal", price: 15000, category: "joyeria", stock: 40, active: true },
+  { id: 4, name: "Hamaca Guajira", price: 120000, category: "hogar", stock: 5, active: false },
+  { id: 5, name: "Canasto de Palma", price: 60000, category: "hogar", stock: 10, active: true }
 ];
 
 // ============================================
@@ -46,6 +51,8 @@ const items = [
 const addItem = (newItem) => {
   // TODO: Usar push para agregar newItem al array items
   // console.log(`Agregado: ${newItem.name}`);
+  items.push(newItem);
+  console.log(`Agregado: ${newItem.name}`);
 };
 
 /**
@@ -55,6 +62,9 @@ const addItem = (newItem) => {
 const removeLastItem = () => {
   // TODO: Usar pop para eliminar y retornar el último elemento
   // Guardar el resultado en una variable y mostrar el nombre
+  const removedItem = items.pop();
+  console.log(`Eliminado: ${removedItem?.name}`);
+  return removedItem;
 };
 
 /**
@@ -64,6 +74,8 @@ const removeLastItem = () => {
 const addPriorityItem = (priorityItem) => {
   // TODO: Usar unshift para agregar priorityItem al inicio de items
   // console.log(`Elemento prioritario agregado: ${priorityItem.name}`);
+  items.unshift(priorityItem);
+  console.log(`Elemento prioritario agregado: ${priorityItem.name}`);
 };
 
 /**
@@ -73,6 +85,8 @@ const addPriorityItem = (priorityItem) => {
 const removeByIndex = (index) => {
   // TODO: Usar splice para eliminar 1 elemento en la posición index
   // Mostrar el nombre del elemento eliminado
+  const removed = items.splice(index, 1);
+  console.log(`Eliminado: ${removed[0]?.name}`);
 };
 
 /**
@@ -82,7 +96,7 @@ const removeByIndex = (index) => {
 const getActiveItems = () => {
   // TODO: Usar filter para retornar solo los elementos con la propiedad
   // booleana en true (ajusta el nombre de la propiedad a tu dominio)
-  return [];
+  return items.filter((item) => item.active === true);
 };
 
 /**
@@ -92,7 +106,7 @@ const getActiveItems = () => {
  */
 const findByName = (name) => {
   // TODO: Usar find para retornar el primer elemento cuyo name coincida
-  return null;
+  return items.find((item) => item.name === name);
 };
 
 /**
@@ -105,7 +119,13 @@ const formatItem = (item) => {
   // Usar template literals y mostrar las propiedades más importantes
   // Ejemplo (adaptar al dominio):
   // return `[${item.id}] ${item.name} — ...propiedades...`;
-  return `[${item.id}] ${item.name}`;
+
+  const priceFormatted = item.price.toLocaleString("es-CO", {
+    style: "currency",
+    currency: "COP"
+  });
+
+  return `[${item.id}] ${item.name} — ${item.category} — ${priceFormatted} — Stock: ${item.stock}`;
 };
 
 // ============================================
@@ -127,14 +147,18 @@ console.log("\n--- Operaciones de mutación ---\n");
 
 // TODO: Crear un nuevo elemento de tu dominio y usar addItem para agregarlo
 // Ejemplo: addItem({ id: 6, name: "Nuevo Elemento", ..., active: true });
+addItem({ id: 6, name: "Collar de Chaquiras", price: 35000, category: "joyeria", stock: 25, active: true });
 
 // TODO: Usar addPriorityItem para agregar un elemento prioritario
 // Ejemplo: addPriorityItem({ id: 0, name: "Elemento Prioritario", ..., active: true });
+addPriorityItem({ id: 0, name: "Ruana Artesanal", price: 95000, category: "ropa", stock: 8, active: true });
 
 // TODO: Usar removeByIndex para eliminar un elemento del medio
 // Ejemplo: removeByIndex(2);
+removeByIndex(2);
 
 // TODO: Usar removeLastItem para quitar el último elemento
+removeLastItem();
 
 console.log("\n--- Inventario después de mutaciones ---\n");
 // TODO: Mostrar el inventario actualizado con forEach + formatItem
@@ -146,21 +170,51 @@ console.log("\n--- Búsqueda y filtrado ---\n");
 
 // TODO: Usar find para buscar un elemento específico por nombre
 // Mostrar el resultado
+const foundItem = findByName("Mochila Wayuu");
+if (foundItem) {
+  console.log(`Elemento encontrado: ${formatItem(foundItem)}`);
+} else {
+  console.log("Elemento no encontrado");
+}
 
 // TODO: Usar getActiveItems() y mostrar cuántos están activos
+const activeItems = getActiveItems();
+console.log(`Productos activos: ${activeItems.length}`);
 
 // TODO: Crear un snapshot inmutable con spread [...items]
 // y agregar un elemento extra sin modificar items
+const snapshot = [...items, {
+  id: 99,
+  name: "Producto Temporal",
+  price: 20000,
+  category: "extra",
+  stock: 5,
+  active: true
+}];
+console.log("Snapshot (no modifica original):", snapshot.length);
+
 console.log("\n--- Transformación con map ---\n");
 
 // TODO: Usar map para crear un array de solo los nombres de los elementos
 // Mostrar los nombres
+const names = items.map(item => item.name);
+console.log("Nombres:", names);
 
 // TODO: Usar map para crear un array con alguna propiedad numérica transformada
 // (ej: precios con descuento, cantidades en otra unidad, etc.)
+const discountedPrices = items.map(item => {
+  const discounted = item.price * 0.9;
+
+  return discounted.toLocaleString("es-CO", {
+    style: "currency",
+    currency: "COP"
+  });
+});
+console.log("Precios con descuento:", discountedPrices);
 
 console.log("\n--- Resumen final ---\n");
 console.log(`Total en inventario: ${items.length} ${VALUE_LABEL}`);
+
 // TODO: mostrar total de activos vs total general
 const activeCount = getActiveItems().length;
 console.log(`Activos: ${activeCount} | Inactivos: ${items.length - activeCount}`);
